@@ -1,9 +1,11 @@
 <template>
   <div id="app">
+    
     <mu-paper class="demo-paper" :z-depth="4" id="mypaper">
-      <div class="title">
-        
+      <div id="img">
+         <img src="./assets/text.png" alt="" id="text">
       </div>
+     
       <mu-avatar slot="avatar" size=80 id="myava">
         <img src="./assets/icon.jpg" />
       </mu-avatar>
@@ -15,7 +17,7 @@
           <mu-text-field type="password" v-model="validateForm.password" prop="password"></mu-text-field>
         </mu-form-item>
         <mu-form-item>
-          <mu-button color="primary" @click="submit" id="mybutton">登录</mu-button>
+          <mu-button color="#cc6b5f" @click="submit" id="mybutton">登录</mu-button>
           <mu-button @click="clear">注册</mu-button>
         </mu-form-item>
       </mu-form>
@@ -92,37 +94,39 @@ export default {
 #myform {
   /* margin-right: 0px; */
   background: #f5eeee;
-  
+  border-radius: 10px;
 }
 #mypaper {
   width: 36%;
   margin: 200px auto;
   border-radius: 10px;
-   background: #f5eeee;
+  background: #f5eeee;
 }
 #mybutton {
-  margin-right: 20%;
+  margin-right: 24%;
   margin-left: 24%;
 }
 #myava{
   margin-bottom: 0px;
 }
-.title{
-  background: url('./assets/text.png') no-repeat;
-  /* border: 2px solid red; */
-  background-size: 100%;
-  width: 100%;
-  height: 150px;
-}
+
 @media screen and (max-width: 600px) {
   #mypaper {
-    width: 100%;
+    width: 95%;
     margin: 100px auto;
     border-radius: 10px;
   }
   #mybutton {
     margin-right: 11%;
     margin-left: 20%;
+  }
+  #text{
+    object-fit: fill;
+    width: 100%;
+    border-radius: 10px;
+  }
+  #img{
+    
   }
 }
 </style>
