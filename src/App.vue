@@ -1,69 +1,14 @@
 <template>
   <div id="app">
-    
-    <mu-paper class="demo-paper" :z-depth="4" id="mypaper">
-      <div id="img">
-         <img src="./assets/text.png" alt="" id="text">
-      </div>
-     
-      <mu-avatar slot="avatar" size=80 id="myava">
-        <img src="./assets/icon.jpg" />
-      </mu-avatar>
-      <mu-form ref="form" :model="validateForm" class="mu-demo-form" id="myform">
-        <mu-form-item label="用户名" help-text prop="username" :rules="usernameRules">
-          <mu-text-field v-model="validateForm.username" prop="username"></mu-text-field>
-        </mu-form-item>
-        <mu-form-item label="密码" prop="password" :rules="passwordRules">
-          <mu-text-field type="password" v-model="validateForm.password" prop="password"></mu-text-field>
-        </mu-form-item>
-        <mu-form-item>
-          <mu-button color="#cc6b5f" @click="submit" id="mybutton">登录</mu-button>
-          <mu-button @click="clear">注册</mu-button>
-        </mu-form-item>
-      </mu-form>
-    </mu-paper>
+    <transition name="">
+      <router-view/>
+    </transition>
 
-    <!-- <router-view/> -->
   </div>
 </template>
 <script>
 export default {
-  data() {
-    return {
-      usernameRules: [
-        { validate: val => !!val, message: "必须填写用户名" },
-        { validate: val => val.length >= 3, message: "用户名长度大于3" }
-      ],
-      passwordRules: [
-        { validate: val => !!val, message: "必须填写密码" },
-        {
-          validate: val => val.length >= 3 && val.length <= 10,
-          message: "密码长度大于3小于10"
-        }
-      ],
-      argeeRules: [{ validate: val => !!val, message: "必须同意用户协议" }],
-      validateForm: {
-        username: "",
-        password: "",
-        isAgree: false
-      }
-    };
-  },
-  methods: {
-    submit() {
-      this.$refs.form.validate().then(result => {
-        console.log("form valid: ", result);
-      });
-    },
-    clear() {
-      this.$refs.form.clear();
-      this.validateForm = {
-        username: "",
-        password: "",
-        isAgree: false
-      };
-    }
-  }
+  
 };
 </script>
 
@@ -87,46 +32,27 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-.mu-demo-form {
-  width: 100%;
-  max-width: 100%;
-}
-#myform {
-  /* margin-right: 0px; */
-  background: #f5eeee;
-  border-radius: 10px;
-}
-#mypaper {
-  width: 36%;
-  margin: 200px auto;
-  border-radius: 10px;
-  background: #f5eeee;
-}
-#mybutton {
-  margin-right: 24%;
-  margin-left: 24%;
-}
-#myava{
-  margin-bottom: 0px;
-}
 
-@media screen and (max-width: 600px) {
-  #mypaper {
-    width: 95%;
-    margin: 100px auto;
-    border-radius: 10px;
-  }
-  #mybutton {
-    margin-right: 11%;
-    margin-left: 20%;
-  }
-  #text{
-    object-fit: fill;
-    width: 100%;
-    border-radius: 10px;
-  }
-  #img{
-    
-  }
+.slide-fade{
+  position: fixed;left:0;right: 0;
+  width: 100%;
+  background-color: white;
+}
+.slide-fade-enter, .slide-fade-leave-to
+{
+  left:0;top: 0;right: 0;
+  position: absolute;
+  transform:translateX(-500px) translateY(-500px) rotate(-150deg) scale(0.5);
+  opacity:1;
+}
+.slide-fade-enter-active {
+  background-color: white;
+  transition: all 0.6s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.7s ease;
+  background-color: white;
+  transform:translateX(500px) translateY(500px) rotate(150deg) scale(1) ;
+  z-index: 100;
 }
 </style>
