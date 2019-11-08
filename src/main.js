@@ -12,11 +12,9 @@ import { Calendar, Loading, MessageBox, } from 'element-ui';
 import theme from 'muse-ui/lib/theme';
 import * as colors from 'muse-ui/lib/theme/colors';
 import axios from '../node_modules/axios';
-import 'vue-event-calendar/dist/style.css' //1.1.10之后的版本，css被放在了单独的文件中，方便替换
-import vueEventCalendar from 'vue-event-calendar'
+import vueEventCalendar from '../src/'
 
-Vue.use(vueEventCalendar, { locale: 'en' }) //可以设置语言，支持中文和英文
-
+Vue.use(vueEventCalendar, { locale: 'zh', weekStartOn: 1 })
 theme.add('custom-theme', {
     primary: colors.redA200,
     secondary: colors.pinkA200
