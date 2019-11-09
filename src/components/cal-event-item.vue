@@ -21,7 +21,7 @@
           </div>
         </mu-expand-transition>
         <audio
-          id="music"
+          :id=event.title
           :src=event.audio
         ></audio>  
       </span>
@@ -63,7 +63,7 @@ export default {
   methods: {
     dateTimeFormatter,
     play() {
-      let audio = document.getElementById("music");
+      let audio = document.getElementById(this.event.title);
       audio.play();
     }
   }
