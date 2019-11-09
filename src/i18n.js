@@ -12,7 +12,7 @@ export default {
         monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
         format: 'yyyy年MM月',
         fullFormat: 'yyyy年MM月dd日',
-        dayEventsTitle: 'Words',
+        dayEventsTitle: '复习周期内的所有单词',
         notHaveEvents: '没有事件'
     },
     us: {

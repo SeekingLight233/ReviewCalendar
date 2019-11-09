@@ -1,5 +1,8 @@
 <template>
   <div class="__vev_calendar-wrapper">
+    <h2 class="welcome">
+      欢迎你，PraiseSunAsh！
+    </h2>
     <cal-panel
       :events="events"
       :calendar="calendarOptions"
@@ -53,7 +56,8 @@ export default {
         })
         return validate
       }
-    }
+    },
+    username:String
   },
   computed: {
     calendarOptions () {
@@ -172,9 +176,18 @@ export default {
     }
   }
 }
+.welcome{
+  margin-left: 17%;
+}
 @media screen and (max-width: 767px) {
+  .welcome{
+    transform: translateY(-58px);
+    margin-top: 14%;
+    margin-left: 22%;
+  }
   .__vev_calendar-wrapper{
     .cal-wrapper{
+      transform: translateY(10px);
       width: 100%;
       padding: 10px 5px;
       .date-num{
@@ -185,10 +198,12 @@ export default {
       width: 100%;
       margin-top: 10px;
       padding: 10px;
+      transform: translateY(-92px);
     }
   }
 }
 .__vev_calendar-wrapper{
+  
   position: relative;
   overflow: hidden;
   width: 100%;
@@ -208,6 +223,7 @@ export default {
     background: rgba(0,0,0,.2);
   }
   .cal-wrapper{
+    transform: translateY(-60px);
     .cal-header{
       position: relative;
       width: 100%;

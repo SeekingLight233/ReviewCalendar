@@ -24,7 +24,7 @@
         </mu-form-item>
         <mu-form-item>
           <mu-button color="#cc6b5f" @click="submit" id="mybutton">登录</mu-button>
-          <mu-button @click="register">注册</mu-button>
+          <mu-button @click="register" id="mybuttonrignt">注册</mu-button>
         </mu-form-item>
       </mu-form>
     </mu-paper>
@@ -121,12 +121,18 @@ export default {
   background: #f5eeee;
 }
 #mybutton {
-  margin-right: 24%;
-  margin-left: 22%;
+  margin-right: 20%;
+  margin-left: 20%;
 }
 #myava {
-  margin-bottom: 0px;
+  margin-left: 42%;
 }
+#text {
+  object-fit: fill;
+  width: 100%;
+  border-radius: 10px;
+}
+
 
 @media screen and (max-width: 600px) {
   #mypaper {
@@ -138,12 +144,12 @@ export default {
     margin-right: 11%;
     margin-left: 20%;
   }
-  #text {
-    object-fit: fill;
-    width: 100%;
-    border-radius: 10px;
-  }
+  
   #img {
+
+  }
+  #myava {
+    margin-left: 38%;
   }
 }
 </style>
