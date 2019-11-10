@@ -56,16 +56,22 @@ export default {
             "http://media-audio1.qiniu.baydn.com/us/a/ab/abc_pub_audio/f6a76dfa37fda935a7b3737df8834fb9.98c9b59648e603cbee652980dbdad19f.mp3.mp3"
         },
         {
-          date: `2019/11/17`,
-          title: "merge",
-          desc: "longlonglong description"
+          date: `2019/11/29`,
+          title: "root",
         },
         {
-          date: `${today.getFullYear()}/${today.getMonth() +
-            1}/${today.getDate()}`,
-          title: "handsome",
-          desc: "longlonglong description"
-        }
+          date: `2019/11/30`,
+          title: "root",
+        },
+        {
+          date: `2019/11/20`,
+          title: "root",
+        },
+        {
+          date: `2019/11/21`,
+          title: "root",
+        },
+        
       ]
     };
   },
@@ -76,6 +82,9 @@ export default {
   created() {
     
   },
+  mounted(){
+    this.$EventCalendar.toDate('2019/11/09');
+  }
   
   // mounted() {
   //   this.$axios

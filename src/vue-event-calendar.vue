@@ -152,7 +152,7 @@ export default {
 @large-padding: 15px;
 @small-padding: 10px;
 
-@icon-border-size: 1px;
+@icon-border-size: 2px;
 @media screen and (min-width: 768px) {
   .__vev_calendar-wrapper{
     max-width: 1200px;
@@ -296,7 +296,7 @@ export default {
           }
           .is-event{
             content: '';
-            border: 1px solid @base-orange;
+            border: 2px solid @base-orange;
             background-color: #fff;
             border-radius: 50%;
             width: 36px;
