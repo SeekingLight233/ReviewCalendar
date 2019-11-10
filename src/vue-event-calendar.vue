@@ -7,6 +7,7 @@
       :events="events"
       :calendar="calendarOptions"
       :selectedDay='selectedDayEvents.date'
+      :init="init"
       @cur-day-changed="handleChangeCurDay"
       @month-changed="handleMonthChanged">
     </cal-panel>
@@ -41,6 +42,7 @@ export default {
     }
   },
   props: {
+    init:String,
     title: String,
     events: {
       type: Array,

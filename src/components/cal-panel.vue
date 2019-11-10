@@ -25,7 +25,7 @@
           :key="date.date"
           >
           <p class="date-num"
-            @click="handleChangeCurday(date)"
+            @click="handleChangeCurday(date,init)"
             :style="{color: date.title != undefined ? ((date.date == selectedDay) ? '#fff' : '#fff') : 'white'}">
             {{date.status ? date.date.split('/')[2] : '&nbsp;'}}</p>
           <span v-if="date.status ? (today == date.date) : false" class="is-today" :style="{backgroundColor: customColor }" ></span>
@@ -61,7 +61,11 @@ export default {
     selectedDay: {
       type: String,
       required: false
-    }
+    },
+    init:{
+      type: String,
+      required: true
+    },
   },
   computed: {
     dayList () {
@@ -126,9 +130,14 @@ export default {
     },
     handleChangeCurday (date) {
       if (date.status) {
-        this.$emit('cur-day-changed', date.date)
+        this.$emit('cur-day-changed', date.date);
+        console.log(date.date);
       }
+
     }
+  },
+  mounted(){
+    this.$emit('cur-day-changed', '2019/11/10');
   }
 }
 </script>
