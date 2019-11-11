@@ -1,7 +1,7 @@
 <template>
   <div class="__vev_calendar-wrapper">
     <h2 class="welcome">
-      欢迎你，PraiseSunAsh！
+      欢迎你，{{username}}！
     </h2>
     <cal-panel
       :events="events"
@@ -37,7 +37,8 @@ export default {
     return {
       selectedDayEvents: {
         date: 'all',
-        events: this.events || []  //default show all event
+        events: this.events || [],  //default show all event,
+        username:this.$store.state.username
       }
     }
   },

@@ -1,13 +1,15 @@
 <template>
-  <div class="events-wrapper" :style="bgColor">
+  <div class="events-wrapper" :style="bgColor" v-show="myshow">
     <h2 class="date">
       {{dayEventsTitle}}
     </h2>
     <div class="cal-events">
       <slot>
-        <div v-for="(event, index) in events" class="event-item" :key="index">
-          <cal-event-item :event="event" :index="index" :locale="locale"></cal-event-item>
+        
+        <div v-for="(event, index) in events" class="event-item" :key="index" >
+          <cal-event-item :event="event" :index="index" :locale="locale" ></cal-event-item>
         </div>
+
       </slot>
     </div>
   </div>
@@ -21,7 +23,9 @@ export default {
   name: 'cal-events',
   data () {
     return {
-      i18n
+      i18n,
+      myshow:false,
+      // show:this.store.status
     }
   },
   components: {
@@ -64,6 +68,15 @@ export default {
     bgColor () {
       return {backgroundColor: this.color}
     }
+  },
+  mounted(){
+    console.log("cal-event")
+    console.log(this.dayEvents)
+  },
+  updated(){
+    this.myshow = this.$store.state.showevent;
+    console.log("updated");
+    console.log(this.$store.state.showevent);
   },
   methods: {
     dateTimeFormatter

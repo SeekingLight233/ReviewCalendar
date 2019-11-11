@@ -1,8 +1,8 @@
 <template>
-  <div class="wrapper" id="mywrapper" @click="show = true">
+  <div class="wrapper" id="mywrapper" @click="update" >
     
       <span class="left">
-        <span class="word">{{index+1}}. {{event.title}}</span>
+        <span class="word">{{event.title}}</span>
         <div class="audio">
           <span class="commit" @click.stop="play()">{{event.commit}}</span>
           <div class="icon" @click.stop="play()">
@@ -43,7 +43,7 @@ export default {
     return {
       i18n,
       show: false,
-      showstar: false
+      showstar: false,
     };
   },
   props: {
@@ -65,8 +65,13 @@ export default {
     play() {
       let audio = document.getElementById(this.event.title);
       audio.play();
+    },
+    update(){
+      this.show = true;
+      //发送post请求更新单词状态
     }
-  }
+  },
+  
 };
 </script>
 <style>

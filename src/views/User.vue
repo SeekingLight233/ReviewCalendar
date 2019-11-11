@@ -5,6 +5,7 @@
       :events="demoEvents"
       @day-changed="handleDayChanged"
       @month-changed="handleMonthChanged"
+      :username = "this.$store.state.username"
     ></vue-event-calendar>
   </div>
 </template>
@@ -17,20 +18,41 @@ export default {
     return {
       init:"2019/11/10",
       demoEvents: [
-        {
-          date: `2019/11/08`,
-          title: "root",
-          desc: "can u hear me???",
-          defn: "vt.做，制造； 生产，制定；",
-          commit: "/ɪɡ'zæktli/",
-          audio:
-            "http://media-audio1.qiniu.baydn.com/us/a/ab/abc_pub_audio/f6a76dfa37fda935a7b3737df8834fb9.98c9b59648e603cbee652980dbdad19f.mp3.mp3"
-        }
+        // {
+        //   date: `2019/11/08`,
+        //   title: "root",
+        //   desc: "can u hear me???",
+        //   defn: "vt.做，制造； 生产，制定；",
+        //   commit: "/ɪɡ'zæktli/",
+        //   audio:
+        //     "http://media-audio1.qiniu.baydn.com/us/a/ab/abc_pub_audio/f6a76dfa37fda935a7b3737df8834fb9.98c9b59648e603cbee652980dbdad19f.mp3.mp3"
+        // },
+        // {
+        //   date: `2019/11/08`,
+        //   title: "root",
+        //   desc: "can u hear me???",
+        //   defn: "vt.做，制造； 生产，制定；",
+        //   commit: "/ɪɡ'zæktli/",
+        //   audio:
+        //     "http://media-audio1.qiniu.baydn.com/us/a/ab/abc_pub_audio/f6a76dfa37fda935a7b3737df8834fb9.98c9b59648e603cbee652980dbdad19f.mp3.mp3"
+        // },
+        // {
+        //   date: `2019/11/08`,
+        //   title: "root",
+        //   desc: "can u hear me???",
+        //   defn: "vt.做，制造； 生产，制定；",
+        //   commit: "/ɪɡ'zæktli/",
+        //   audio:
+        //     "http://media-audio1.qiniu.baydn.com/us/a/ab/abc_pub_audio/f6a76dfa37fda935a7b3737df8834fb9.98c9b59648e603cbee652980dbdad19f.mp3.mp3"
+        // },
       ]
     };
   },
   methods: {
-    handleDayChanged(data) {},
+    handleDayChanged(data) {
+      this.$store.state.showevent = true;
+      console.log("触发了handle事件");
+    },
     handleMonthChanged(data) {},
     getword(unix, username) {
       this.$axios
@@ -71,26 +93,47 @@ export default {
       let day = time.getDate();
       let full = year + "/" + month + "/" + day;
       return full;
+    },
+    transformDateString(str){
+      let year = str.slice(0,4);
+      let month = str.slice(5,7);
+      let day = str.slice(8,10);
+      let full = year + "/" + month + "/" + day;
+      return full;
     }
   },
   created() {
+    console.log(this.$store.state.total);
     this.$axios
       .post("https://www.jixieclub.com:8444/getall", {
         params: {
-          user: "690163223"
+          user: this.$store.state.username
         }
       })
       .then(res => {
         console.log(res.data);
-        this.demoEvents.push(...res.data);
+        let list = [];
+        for(let i = 0;i<res.data.length;i++){
+          let obj = {};
+          console.log(res.data[i].data);
+          console.log(typeof(res.data[i].data));
+          let full = this.transformDateString(res.data[i].data);
+          obj.date = full;
+            obj.title = res.data[i].word;
+            obj.desc = res.data[i].note;
+            obj.defn = res.data[i].defn;
+            obj.commit = res.data[i].commit;
+            obj.audio = res.data[i].audio;
+            list.push(obj);
+        }
+        this.demoEvents = list;
       });
-      // this.$EventCalendar.toDate('2019/11/10');
   },
 
   mounted() {
-    this.getword(new Date().getTime(), "690163223");
+    // this.getword(1573626059000, "690163223");
     // let today = this.transformDate(new Date().getTime());
-    this.$EventCalendar.toDate('2019/11/09');
+    // this.$EventCalendar.toDate('2019/11/09');
   }
 };
 </script>

@@ -86,6 +86,7 @@ export default {
             alert("密码输入错误");
           }
           if (res.data.res === "match") {
+            this.$store.state.username = this.validateForm.username;
             this.$router.push({ path: "/user" });
           }
         });

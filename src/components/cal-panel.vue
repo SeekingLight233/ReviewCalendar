@@ -28,7 +28,7 @@
             @click="handleChangeCurday(date,init)"
             :style="{color: date.title != undefined ? ((date.date == selectedDay) ? '#fff' : '#fff') : 'white'}">
             {{date.status ? date.date.split('/')[2] : '&nbsp;'}}</p>
-          <span v-if="date.status ? (today == date.date) : false" class="is-today" :style="{backgroundColor: customColor }" ></span>
+          <span v-if="date.status ? (today == date.date) : false" class="is-today" :style="{backgroundColor: 'white' }" ></span>
           <span v-if="date.status ? (date.title != undefined) : false" class="is-event"
             :style="{borderColor: '#fff', backgroundColor: (date.date == selectedDay) ? customColor : 'inherit'}"></span>
         </div>
@@ -135,9 +135,6 @@ export default {
       }
 
     }
-  },
-  mounted(){
-    this.$emit('cur-day-changed', '2019/11/10');
   }
 }
 </script>
