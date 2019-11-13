@@ -103,7 +103,8 @@ export default {
     }
   },
   created() {
-    console.log(this.$store.state.total);
+     this.$store.state.username = localStorage.getItem("username");
+    //  let user = localStorage.getItem("username");
     this.$axios
       .post("https://www.jixieclub.com:8444/getall", {
         params: {
@@ -123,7 +124,7 @@ export default {
             obj.desc = res.data[i].note;
             obj.defn = res.data[i].defn;
             obj.commit = res.data[i].commit;
-            obj.audio = res.data[i].audio;
+            obj.audio = "https:"+res.data[i].audio;
             list.push(obj);
         }
         this.demoEvents = list;

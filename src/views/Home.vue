@@ -86,7 +86,9 @@ export default {
             alert("密码输入错误");
           }
           if (res.data.res === "match") {
-            this.$store.state.username = this.validateForm.username;
+            localStorage.setItem("username",this.validateForm.username);
+            localStorage.setItem("password",this.validateForm.password);
+            
             this.$router.push({ path: "/user" });
           }
         });
@@ -102,6 +104,15 @@ export default {
         isAgree: false
       };
     }
+  },
+  created(){
+    //如果登陆过了就自动跳转
+    if(localStorage.getItem("username")&&localStorage.getItem("password")){
+      this.$router.push({ path: "/user" });
+    }
+  },
+  mounted(){
+    
   }
 };
 </script>

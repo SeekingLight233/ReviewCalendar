@@ -67,8 +67,26 @@ export default {
       audio.play();
     },
     update(){
+      //第一次展开卡片发送post请求更新单词状态
+      if(this.show == false){
+        let word = this.event.title;
+        let user = this.$store.state.username;
+        console.log(this.$store.state.username);
+      this.$axios
+      .post("https://www.jixieclub.com:8444/update", {
+        params: {
+          word: word,
+          user: user
+        }
+      })
+      .then(res => {
+        console.log(res.data);
+      });
+      }
       this.show = true;
       //发送post请求更新单词状态
+      
+      
     }
   },
   

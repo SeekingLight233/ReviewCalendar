@@ -1,7 +1,7 @@
 <template>
   <div class="__vev_calendar-wrapper">
     <h2 class="welcome">
-      欢迎你，{{username}}！
+      欢迎你，{{$store.state.username}}！
     </h2>
     <cal-panel
       :events="events"
