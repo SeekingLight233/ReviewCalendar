@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <vue-event-calendar
-      :init = "init"
+      :init="init"
       :events="demoEvents"
       @day-changed="handleDayChanged"
       @month-changed="handleMonthChanged"
-      :username = "this.$store.state.username"
+      :username="this.$store.state.username"
     ></vue-event-calendar>
   </div>
 </template>
@@ -16,7 +16,7 @@ export default {
   name: "app",
   data() {
     return {
-      init:"2019/11/10",
+      init: "2019/11/10",
       demoEvents: [
         // {
         //   date: `2019/11/08`,
@@ -94,16 +94,23 @@ export default {
       let full = year + "/" + month + "/" + day;
       return full;
     },
-    transformDateString(str){
-      let year = str.slice(0,4);
-      let month = str.slice(5,7);
-      let day = str.slice(8,10);
+    transformDateString(str) {
+      let year = str.slice(0, 4);
+      let month = str.slice(5, 7);
+      let day = str.slice(8, 10);
       let full = year + "/" + month + "/" + day;
       return full;
     }
   },
   created() {
-     this.$store.state.username = localStorage.getItem("username");
+    Notification.requestPermission().then(function(permission) {
+      if (permission === "granted") {
+        console.log("用户允许通知");
+      } else if (permission === "denied") {
+        console.log("用户拒绝通知");
+      }
+    });
+    this.$store.state.username = localStorage.getItem("username");
     //  let user = localStorage.getItem("username");
     this.$axios
       .post("https://www.jixieclub.com:8444/getall", {
@@ -114,18 +121,18 @@ export default {
       .then(res => {
         console.log(res.data);
         let list = [];
-        for(let i = 0;i<res.data.length;i++){
+        for (let i = 0; i < res.data.length; i++) {
           let obj = {};
           console.log(res.data[i].data);
-          console.log(typeof(res.data[i].data));
+          console.log(typeof res.data[i].data);
           let full = this.transformDateString(res.data[i].data);
           obj.date = full;
-            obj.title = res.data[i].word;
-            obj.desc = res.data[i].note;
-            obj.defn = res.data[i].defn;
-            obj.commit = res.data[i].commit;
-            obj.audio = "https:"+res.data[i].audio;
-            list.push(obj);
+          obj.title = res.data[i].word;
+          obj.desc = res.data[i].note;
+          obj.defn = res.data[i].defn;
+          obj.commit = res.data[i].commit;
+          obj.audio = "https:" + res.data[i].audio;
+          list.push(obj);
         }
         this.demoEvents = list;
       });
