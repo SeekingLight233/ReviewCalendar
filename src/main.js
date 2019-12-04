@@ -13,6 +13,7 @@ import theme from 'muse-ui/lib/theme';
 import * as colors from 'muse-ui/lib/theme/colors';
 import axios from '../node_modules/axios';
 import vueEventCalendar from '../src/'
+import VueResource from 'vue-resource'
 
 Vue.use(vueEventCalendar, { locale: 'zh', weekStartOn: 1 })
 theme.add('custom-theme', {
@@ -30,7 +31,7 @@ Vue.use(Paper);
 Vue.use(Avatar);
 Vue.use(Calendar);
 Vue.use(Loading.directive);
-
+Vue.use(VueResource);
 new Vue({
     router,
     store,

@@ -1,31 +1,26 @@
 <template>
-  <div class="wrapper" id="mywrapper" @click="update" >
-    
-      <span class="left">
-        <span class="word">{{event.title}}</span>
-        <div class="audio">
-          <span class="commit" @click.stop="play()">{{event.commit}}</span>
-          <div class="icon" @click.stop="play()">
-            <mu-icon size="24" value="volume_down"></mu-icon>
-          </div>
+  <div class="wrapper" id="mywrapper" @click="update">
+    <span class="left">
+      <span class="word">{{event.title}}</span>
+      <div class="audio">
+        <span class="commit" @click.stop="play()">{{event.commit}}</span>
+        <div class="icon" @click.stop="play()">
+          <mu-icon size="24" value="volume_down"></mu-icon>
         </div>
-        <div class="icon-star" @click.stop="showstar = !showstar">
-          <mu-icon size="24" value="star_border" v-if="!showstar"></mu-icon>
-          <mu-icon size="24" value="star" v-if="showstar"></mu-icon>
-        </div>
+      </div>
+      <div class="icon-star" @click.stop="showstar = !showstar">
+        <mu-icon size="24" value="star_border" v-if="!showstar"></mu-icon>
+        <mu-icon size="24" value="star" v-if="showstar"></mu-icon>
+      </div>
 
-        <mu-expand-transition>
-          <div class="defn" v-show="show">
-            <span>{{event.defn}}</span>
-            <p class="desc" id="mydesc">{{event.desc}}</p>
-          </div>
-        </mu-expand-transition>
-        <audio
-          :id=event.title
-          :src=event.audio
-        ></audio>  
-      </span>
-    
+      <mu-expand-transition>
+        <div class="defn" v-show="show">
+          <span>{{event.defn}}</span>
+          <p class="desc" id="mydesc">{{event.desc}}</p>
+        </div>
+      </mu-expand-transition>
+      <audio :id="event.title" :src="event.audio"></audio>
+    </span>
   </div>
 </template>
 <script>
@@ -43,7 +38,7 @@ export default {
     return {
       i18n,
       show: false,
-      showstar: false,
+      showstar: false
     };
   },
   props: {
@@ -66,30 +61,40 @@ export default {
       let audio = document.getElementById(this.event.title);
       audio.play();
     },
-    update(){
+    update() {
+      this.play();
       //第一次展开卡片发送post请求更新单词状态
-      if(this.show == false){
+      if (this.show == false) {
         let word = this.event.title;
         let user = this.$store.state.username;
-        console.log(this.$store.state.username);
-      this.$axios
-      .post("https://www.jixieclub.com:8444/update", {
-        params: {
-          word: word,
-          user: user
-        }
-      })
-      .then(res => {
-        console.log(res.data);
-      });
+        console.log("update执行");
+        // this.$axios
+        // .post("https://www.jixieclub.com:8444/update", {
+        //   params: {
+        //     word: word,
+        //     user: user
+        //   }
+        // })
+        // .then(res => {
+        //   console.log(res.data);
+        // });
+        this.$axios.get("https://www.jixieclub.com:8444/update?word="+word+"&user="+user).then(response => {
+          console.log("收到响应");
+          console.log(response);
+        });
+        // this.$http
+        //   .get("https://www.jixieclub.com:8444/update?word="+word+"&user="+user)
+        //   .then(response => {
+        //     console.log(response);
+        //   })
+        //   .catch(function(err) {
+        //     alert("Error", err);
+        //   });
       }
       this.show = true;
       //发送post请求更新单词状态
-      
-      
     }
-  },
-  
+  }
 };
 </script>
 <style>
@@ -143,8 +148,7 @@ export default {
   transform: translateY(5px);
   float: right;
 }
-#mydesc{
+#mydesc {
   transform: translateY(5px);
 }
-
 </style>

@@ -70,13 +70,13 @@ export default {
     }
   },
   mounted(){
-    console.log("cal-event")
-    console.log(this.dayEvents)
+    // console.log("cal-event")
+    // console.log(this.dayEvents)
   },
   updated(){
     this.myshow = this.$store.state.showevent;
-    console.log("updated");
-    console.log(this.$store.state.showevent);
+    // console.log("updated");
+    // console.log(this.$store.state.showevent);
   },
   methods: {
     dateTimeFormatter

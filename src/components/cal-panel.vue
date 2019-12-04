@@ -131,7 +131,7 @@ export default {
     handleChangeCurday (date) {
       if (date.status) {
         this.$emit('cur-day-changed', date.date);
-        console.log(date.date);
+        // console.log(date.date);
       }
 
     }

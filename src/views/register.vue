@@ -51,14 +51,14 @@ export default {
           }
         )
         .then(res => {
-          console.log(res.data.ex);
+          // console.log(res.data.ex);
           if(res.data.ex == true){
             alert("此账户已被占用！")
           }
           if(res.data.ex == false){
             alert("创建成功！")
           }
-          console.log(res.data.ex)
+          // console.log(res.data.ex)
           
         });
     }
