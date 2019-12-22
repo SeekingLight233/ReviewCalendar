@@ -1,9 +1,9 @@
 <template>
   <div class="wrapper" id="mywrapper" @click="update">
     <span class="left">
-      <span class="word">{{event.title}}</span>
+      <span class="word">{{myevent.title}}</span>
       <div class="audio">
-        <span class="commit" @click.stop="play()">{{event.commit}}</span>
+        <span class="commit" @click.stop="play()">{{myevent.commit}}</span>
         <div class="icon" @click.stop="play()">
           <mu-icon size="24" value="volume_down"></mu-icon>
         </div>
@@ -12,13 +12,14 @@
         <mu-icon size="24" value="star_border" v-if="!showstar"></mu-icon>
         <mu-icon size="24" value="star" v-if="showstar"></mu-icon>
       </div>
+
       <mu-expand-transition>
         <div class="defn" v-show="show">
-          <span>{{event.defn}}</span>
-          <p class="desc" id="mydesc">{{event.desc}}</p>
+          <span>{{myevent.defn}}</span>
+          <p class="desc" id="mydesc">{{myevent.desc}}</p>
         </div>
       </mu-expand-transition>
-      <audio :id="event.title" :src="event.audio"></audio>
+      <audio :id="myevent.title" :src="myevent.audio"></audio>
     </span>
   </div>
 </template>
@@ -41,7 +42,7 @@ export default {
     };
   },
   props: {
-    event: {
+    myevent: {
       type: Object,
       required: true
     },
@@ -57,14 +58,14 @@ export default {
   methods: {
     dateTimeFormatter,
     play() {
-      let audio = document.getElementById(this.event.title);
+      let audio = document.getElementById(this.myevent.title);
       audio.play();
     },
     update() {
       this.play();
       //第一次展开卡片发送post请求更新单词状态
       if (this.show == false) {
-        let word = this.event.title;
+        let word = this.myevent.title;
         let user = this.$store.state.username;
         console.log("update执行");
         // this.$axios

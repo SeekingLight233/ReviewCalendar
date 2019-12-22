@@ -11,6 +11,7 @@
       @cur-day-changed="handleChangeCurDay"
       @month-changed="handleMonthChanged">
     </cal-panel>
+
     <cal-events
       :title="title"
       :dayEvents="selectedDayEvents"
@@ -18,12 +19,19 @@
       :color="calendarOptions.options.color">
       <slot :showEvents="selectedDayEvents.events"></slot>
     </cal-events>
+    <my-events
+      :title="title"
+      :dayEvents="myselectedDayEvents"
+      :locale="calendarOptions.options.locale"
+      :color="calendarOptions.options.color">
+    </my-events>
   </div>
 </template>
 <script>
 import { isEqualDateStr} from './tools.js'
 
 import calEvents from './components/cal-events.vue'
+import myEvents from './components/my-events.vue'
 import calPanel from './components/cal-panel.vue'
 
 const inBrowser = typeof window !== 'undefined'
@@ -31,7 +39,8 @@ export default {
   name: 'vue-event-calendar',
   components: {
     'cal-events': calEvents,
-    'cal-panel': calPanel
+    'cal-panel': calPanel,
+    'my-events': myEvents
   },
   data () {
     return {
@@ -39,7 +48,13 @@ export default {
         date: 'all',
         events: this.events || [],  //default show all event,
         username:this.$store.state.username
-      }
+      },
+      myselectedDayEvents: {
+        date: 'all',
+        events: this.dayevents || [],  //default show all event,
+        username:this.$store.state.username
+      },
+
     }
   },
   props: {
@@ -60,6 +75,22 @@ export default {
         return validate
       }
     },
+    dayevents: {
+      type: Array,
+      required: true,
+      default: [],
+      validator (events) {
+        let validate = true
+        events.forEach((event, index) => {
+          if (!event.date) {
+            console.error('Vue-Event-Calendar-Error:' + 'Prop events Wrong at index ' + index)
+            validate = false
+          }
+        })
+        return validate
+      }
+    },
+
     username:String
   },
   computed: {

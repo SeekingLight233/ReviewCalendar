@@ -39,7 +39,7 @@ export default {
       }
       this.$axios
         .post(
-          "http://39.107.97.170:3002/register",
+          "https://www.jixieclub.com:3002/register",
           {
             params: {
               name: this.username,
