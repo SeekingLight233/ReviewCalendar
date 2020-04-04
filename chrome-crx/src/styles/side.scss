@@ -1,0 +1,57 @@
+@include b(side, '') {
+  position: fixed;
+  z-index: 10;
+  left: 20px;
+  top: 20px;
+  bottom: 20px;
+  display: flex;
+  padding-bottom: 25px;
+  flex-flow: column;
+  align-items: center;
+  background: #ffffff;
+  padding-top: 20px;
+  box-shadow: 0 2px 22px 0 rgba(15, 35, 95, 0.11);
+  border-radius: 35% / 3.3%;
+
+  @include e(logo) {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 30px;
+    border-radius: 50%;
+    background: #fff;
+    user-select: none;
+    content: url('chrome-extension://__MSG_@@extension_id__/assets/logo.png');
+    box-shadow: 0 19px 23px -12px rgba(58, 24, 212, 0.67);
+  }
+
+  @include e(menu) {
+    flex-grow: 1;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  @include e(link) {
+    color: #f41e1e;
+    cursor: pointer;
+    padding: 0 20px;
+
+    @include when(active) {
+      box-shadow: 10px 0 0 -4px currentColor inset;
+    }
+  }
+
+  @include e(setting) {
+    cursor: pointer;
+
+    > .__icon {
+      font-size: 25px !important;
+    }
+
+    &.active {
+      > .__icon {
+        color: $primary;
+      }
+    }
+  }
+}

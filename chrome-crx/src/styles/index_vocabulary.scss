@@ -1,0 +1,472 @@
+@import 'core/mixin';
+@import 'font';
+@import 'side';
+@import './setting';
+@import 'switch';
+@import 'tooltip';
+@import 'toast';
+
+@font-face {
+  font-family: 'Roboto';
+  font-weight: 500;
+  src: url('chrome-extension://__MSG_@@extension_id__/fonts/Roboto-Medium.ttf') format('truetype');
+  unicode-range: U + 0-7f, U + A0, U + 200a, U + 2014, U + 2018, U + 2019, U + 201c, U + 201d,
+    U + 2022, U + 2026;
+}
+
+html,
+body {
+  --padding-left: 150px;
+  --content-font: #{font-song()};
+
+  margin: 0;
+  padding: 0;
+  background: #fafafa;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.merriam {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  top: 30vh;
+  width: 100vw;
+  height: 70vh;
+}
+
+@include b(voca, '') {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+
+  @include e(top) {
+    height: 160px;
+    padding-left: var(--padding-left);
+    background: #fff;
+    border: 1px solid #f1f1f1;
+  }
+
+  @include e(content) {
+    --columns: 5;
+
+    display: grid;
+    grid-template-columns: repeat(var(--columns), 1fr);
+    grid-gap: 20px 25px;
+    grid-auto-rows: max-content;
+    align-content: start;
+    height: calc(100vh - 160px);
+    padding-top: 20px;
+    padding-right: 15px;
+    padding-left: calc(var(--padding-left) - 20px);
+    padding-bottom: 40px;
+    overflow: auto;
+
+    &.hei {
+      --content-font: #{font-hei()};
+    }
+
+    &.kai {
+      --content-font: #{font-kai()};
+    }
+
+    @include non-scroll-bar;
+
+    @include res(xm) {
+      --columns: 4;
+    }
+
+    @include res(m) {
+      --columns: 3;
+    }
+
+    @include res(sm) {
+      --columns: 3;
+    }
+
+    &:empty {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 40px;
+      font-weight: bold;
+      color: #ddd;
+      @include font-old;
+
+      &::before {
+        content: '';
+        display: block;
+        width: 200px;
+        height: 210px;
+        margin-right: 20px;
+        background-image: url('chrome-extension://__MSG_@@extension_id__/assets/404.png');
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+        background-position: 0 center;
+        transform: ty(-20px);
+      }
+
+      &::after {
+        content: 'Meow~ Absolutely nothing!';
+      }
+    }
+  }
+}
+
+@include b(tool, '') {
+  display: grid;
+  grid-template-areas: 'input stage count';
+  grid-template-columns: 33% fit-content(300px) auto;
+  align-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+@include b(input, '') {
+  position: relative;
+  grid-area: input;
+  width: 100%;
+  padding-right: 70px;
+
+  @include e(inner) {
+    width: 100%;
+    background: #f4f4f4;
+    font-size: 18px;
+    padding: 15px 20px 15px 40px !important;
+    border-radius: 100px !important;
+    border: 2px #fff solid !important;
+    box-shadow: 0 0 0 2px #f4f4f4;
+    outline: none;
+    @include font-old;
+
+    @include placeholder {
+      color: #bdbdbd;
+    }
+  }
+
+  .__icon-search {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    color: #ccc;
+    transform: ty(-40%);
+  }
+}
+
+@include b(stage, '') {
+  display: flex;
+  align-items: center;
+  grid-area: stage;
+
+  @include e(dot) {
+    box-sizing: content-box;
+    @include circle(14px);
+    margin-right: 15px;
+    background: currentColor;
+    cursor: pointer;
+    @include ts;
+
+    @include m(0) {
+      color: #cfcfcf;
+    }
+
+    @for $i from 1 through 5 {
+      @include m($i) {
+        color: nth($stage-color-list, $i);
+      }
+    }
+
+    &:hover {
+      transform: scale(1.3);
+    }
+
+    &.active {
+      pointer-events: none;
+      box-shadow: 0 0 0 2px #fff, 0 0 0 3px currentColor;
+    }
+  }
+}
+
+@include b(word, '') {
+  position: relative;
+  background: #ffffff;
+  padding: 20px 18px 40px;
+  box-shadow: 0 2px 28px 0 rgba(137, 137, 137, 0.17);
+  border-radius: 6px;
+  cursor: pointer;
+  overflow: hidden;
+  @include ts;
+
+  @for $i from 1 through 5 {
+    @include m(#{$i}) {
+      &:hover {
+        box-shadow: 0 0 0 3px mix(nth($stage-color-list, $i), transparent, 100%);
+      }
+    }
+  }
+
+  @include share-rule(dict) {
+    display: none;
+    position: absolute !important;
+    top: 10px;
+    cursor: pointer;
+  }
+
+  @include e(shanbay) {
+    @include extend-rule(dict);
+    right: 70px;
+    color: rgb(29, 168, 76);
+  }
+
+  @include e(youdao) {
+    @include extend-rule(dict);
+    right: 40px;
+    color: rgb(224, 50, 50);
+  }
+
+  @include pseudo(hover) {
+    @include e(actions) {
+      opacity: 1;
+      transform: txy(0, 0);
+      pointer-events: unset;
+    }
+
+    @include e('status-indicator') {
+      transform: txy(100%, 100%);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    @include e((shanbay, youdao)) {
+      display: block;
+    }
+  }
+
+  @include e(text) {
+    @include font-old;
+    font-size: 18px;
+  }
+
+  @include e(ref) {
+    position: absolute !important;
+    z-index: 2;
+    top: 10px;
+    right: 10px;
+    font-size: 14px;
+    text-decoration: none;
+    color: #333;
+
+    .__icon {
+      font-size: inherit;
+    }
+  }
+
+  @include e(time) {
+    font-size: 12px;
+    padding-bottom: 12px;
+    color: #ccc;
+    cursor: text;
+    font-family: var(--content-font);
+  }
+
+  @include e(eg) {
+    display: block;
+    height: 12px;
+    font-size: 12px;
+    font-family: var(--content-font);
+    color: #ccc;
+    word-break: break-all;
+
+    &:hover {
+      color: #333;
+    }
+  }
+
+  @include e(speaker) {
+    display: flex;
+    margin-top: 3px;
+    margin-bottom: 15px;
+    max-width: 100%;
+    cursor: text;
+  }
+
+  @include e(pronunciation) {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    cursor: text;
+  }
+
+  @include e(flag) {
+    width: 18px;
+    height: 9px;
+    margin-right: 5px;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: 0 center;
+
+    @include m(uk) {
+      background-image: url('chrome-extension://__MSG_@@extension_id__/assets/uk.png');
+    }
+
+    @include m(usa) {
+      background-image: url('chrome-extension://__MSG_@@extension_id__/assets/usa.png');
+    }
+  }
+
+  @include e(phonetic) {
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    font-family: var(--content-font);
+  }
+
+  @include e(audio) {
+    display: none;
+  }
+
+  @include e(status) {
+    position: absolute;
+    bottom: -3px;
+    right: 0;
+
+    @for $i from 1 through 5 {
+      @include m($i) {
+        color: nth($stage-color-list, $i);
+      }
+    }
+
+    [class*='circle'] {
+      fill: currentColor;
+    }
+
+    .circle-outer {
+      visibility: hidden;
+    }
+
+    &.word_status--1 {
+      .circle-outer {
+        visibility: visible;
+      }
+    }
+  }
+
+  @include e('status-indicator') {
+    transition: timing(0.3);
+  }
+
+  @include e(actions) {
+    position: absolute !important;
+    right: 10px;
+    bottom: 15px;
+    display: flex;
+    pointer-events: none;
+    opacity: 0;
+    transform: txy(-80%, 0);
+    align-items: center;
+    @include ts;
+    font-size: 12px;
+
+    .__icon-play {
+      font-size: 12px !important;
+
+      &.reverse {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  @include e('action-button') {
+    display: flex;
+    margin-left: 10px;
+    cursor: pointer;
+
+    &.hidden {
+      display: none;
+    }
+  }
+}
+
+@include b(count, '') {
+  grid-area: count;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 40px;
+}
+
+@include b(number, '') {
+  align-self: end;
+
+  @include e(text) {
+    display: block;
+    font-size: 17px;
+    color: #bbb;
+  }
+
+  @include e(count) {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 50px;
+    margin-bottom: 0;
+    margin-top: 15px;
+    text-align: center;
+  }
+}
+
+@include b(yls, '') {
+  position: fixed;
+  display: flex;
+  right: 30px;
+  bottom: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 10px 20px -5px rgba(65, 65, 65, 0.17);
+  cursor: pointer;
+  @include ts();
+
+  @include pseudo(hover) {
+    transform: ty(-3px);
+
+    @include e(qr) {
+      display: block;
+    }
+  }
+
+  > .__icon.__icon {
+    display: block;
+    margin: auto;
+    font-size: 30px;
+    color: #333;
+  }
+
+  @include e(qr) {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: txy(0%, -110%);
+    box-shadow: 0 10px 20px -5px rgba(65, 65, 65, 0.17);
+    width: 180px;
+  }
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  font-size: 60px;
+
+  &_img {
+    width: 200px;
+    height: 210px;
+    background-image: url('chrome-extension://__MSG_@@extension_id__/assets/404.png');
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: 0 center;
+  }
+}

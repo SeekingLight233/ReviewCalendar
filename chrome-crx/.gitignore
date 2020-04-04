@@ -1,0 +1,14 @@
+node_modules/
+/dist/
+npm-debug.log*
+.DS_Store
+package-lock.json
+
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+*.zip
