@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper" id="mywrapper" @click="update">
     <span class="left">
+      <span class="word">{{index+1}}.</span>
       <span class="word">{{event.title}}</span>
       <div class="audio">
         <span class="commit" @click.stop="play()">{{event.commit}}</span>
