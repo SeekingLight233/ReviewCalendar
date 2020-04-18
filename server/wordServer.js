@@ -260,6 +260,27 @@ app.post('/getword', (req0, res0) => {
 
 })
 
+// app.post('/update', (req0, res0) => {
+//     let word = req0.body.params.word;
+//     mongoose.connect('mongodb://127.0.0.1:27017/word', { useNewUrlParser: true });
+//     let user = mongoose.model(req0.body.params.user, word.UserSchema);
+//     user.findOne({ word, word }, (err1, res1) => {
+//         let status = res1.status;
+//         status--;
+//         user.findOneAndUpdate({ word: word }, { status: status }, (err2, res2) => {
+//             if (status == 0) {
+//                 //如果说这个状态没有了，那么在更新完之后直接将其删除
+//                 user.remove({ word: word }, (err3, res3) => {
+//                     if (err3) {
+//                         console.log("删除失败")
+//                     } else {
+//                         console.log("删除成功")
+//                     }
+//                 })
+//             }
+//         })
+//     })
+// });
 
 //想了想还是用get请求来更新单词状态吧。。。
 app.get('/update', (req0, res0) => {
@@ -271,7 +292,9 @@ app.get('/update', (req0, res0) => {
     let user = mongoose.model(req0.query.user, word.UserSchema);
     user.findOne({ word, word }, (err1, res1) => {
         let status = res1.status;
-        status--;
+        let update = parseInt(req0.query.update);
+        status = status + update;
+        console.log("现在的单词状态:  " + status);
         user.findOneAndUpdate({ word: word }, { status: status }, (err2, res2) => {
             if (status == 0) {
                 //如果说这个状态没有了，那么在更新完之后直接将其删除
@@ -365,3 +388,4 @@ app.use('/music', express.static('./resources/music'));
 
 var httpsServer = https.createServer(credentials, app);
 httpsServer.listen(8444, () => console.log('跑在8444'));
+// app.listen(7777, () => console.log('跑在 7777!'))
