@@ -62,36 +62,24 @@ export default {
       audio.play();
     },
     update() {
-      this.play();
+      if(this.show === false) this.play();
+
+      let UPDATE = null;
+      this.show === false ? (UPDATE = -1) : (UPDATE = 1);
       //第一次展开卡片发送post请求更新单词状态
-      if (this.show == false) {
-        let word = this.event.title;
-        let user = this.$store.state.username;
-        console.log("update执行");
-        // this.$axios
-        // .post("https://www.jixieclub.com:8444/update", {
-        //   params: {
-        //     word: word,
-        //     user: user
-        //   }
-        // })
-        // .then(res => {
-        //   console.log(res.data);
-        // });
-        this.$axios.get("https://www.jixieclub.com:8444/update?word="+word+"&user="+user).then(response => {
+      let word = this.event.title;
+      let user = this.$store.state.username;
+      console.log("update执行");
+      this.$axios
+        .get(
+          "https://www.jixieclub.com:8444/update?word=" + word + "&user=" + user+"&update="+UPDATE
+        )
+        .then(response => {
           console.log("收到响应");
           console.log(response);
         });
-        // this.$http
-        //   .get("https://www.jixieclub.com:8444/update?word="+word+"&user="+user)
-        //   .then(response => {
-        //     console.log(response);
-        //   })
-        //   .catch(function(err) {
-        //     alert("Error", err);
-        //   });
-      }
-      this.show = true;
+
+      this.show = !this.show;
       //发送post请求更新单词状态
     }
   }
